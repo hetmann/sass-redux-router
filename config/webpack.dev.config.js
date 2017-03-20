@@ -15,30 +15,40 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     publicPath: '/assets',
-    path: 'build'
+    path: '/build'
   },
   resolve: {
-    modulesDirectories: ['node_modules', 'src']
+    modules: ['node_modules', 'src']
+  },
+  resolveLoader: {
+    moduleExtensions: ['-loader']
   },
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'eslint'
-      }
-    ],
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: ['react-hot', 'babel']
+        use: ['react-hot', 'babel']
       },
       {
-        test: /(\.css|.less)$/,
-        loader: styleExtractor.extract('css!less')
+        test: /(\.css|.less|.scss)$/,
+        use: styleExtractor.extract('css!less!sass')
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: 'eslint',
+        enforce: 'pre'
       }
     ]
   },
-  plugins: [ styleExtractor ]
+  plugins: [ styleExtractor ],
+  devServer: {
+    contentBase: path.resolve(__dirname, '../public'),
+    compress: true,
+    stats: { colors: true, verbose: true },
+    watchContentBase: true,
+    host: "localhost",
+    port: 8080
+  }
 };
