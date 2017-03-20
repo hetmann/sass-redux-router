@@ -1,4 +1,4 @@
-import './style.less';
+import './style.scss';
 import Immutable from 'immutable';
 import React from 'react';
 import { render } from 'react-dom';
