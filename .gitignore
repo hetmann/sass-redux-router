@@ -15,3 +15,6 @@ build
 
 #Test coverage report
 .nyc_output
+
+.DS_Store
+yarn.lock
