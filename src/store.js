@@ -20,8 +20,8 @@ const loggerMiddleware = createLogger({
   }
 });
 
-const store = createStore(
-  rootReducer,
+const store = (moduleReducers) => createStore(
+  rootReducer(moduleReducers),
   applyMiddleware(thunkMiddleware, loggerMiddleware)
 );
 

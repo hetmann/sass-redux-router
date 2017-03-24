@@ -6,12 +6,13 @@
   "scripts": {
     "test": "mocha test --require ignore-styles --compilers js:babel-core/register",
     "cover": "nyc npm t",
-    "start": "webpack-dev-server --hot --progress --config config/webpack.dev.config.js",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --hot --progress --config config/webpack.dev.config.js",
     "lint": "eslint src/**/*.js",
-    "build": "webpack --config config/webpack.dev.config.js",
-    "build:prod": "webpack -p --config config/webpack.prod.config.js"
+    "build": "cross-env NODE_ENV=development webpack --config config/webpack.dev.config.js",
+    "build:prod": "cross-env NODE_ENV=production webpack -p --config config/webpack.prod.config.js"
   },
   "dependencies": {
+    "cross-env": "^3.2.4",
     "immutable": "^3.8.1",
     "material-ui": "^0.17.1",
     "react": "^15.4.2",

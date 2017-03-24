@@ -9,12 +9,16 @@ injectTapEventPlugin();
 
 import store from './store';
 
-import GitHubExplorer from '../examples/github-explorer';
+import GitHubExplorer, { reducers } from '../examples/github-explorer';
+const GitHubStore = store({
+  userInformation: reducers.user.userInformation,
+  repos: reducers.repos.repos
+})
 
 export default class Wrapper extends React.PureComponent {
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={GitHubStore}>
         <Router>
           {this.props.children}
         </Router>

@@ -15,7 +15,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     publicPath: '/assets',
-    path: '/build'
+    path: path.resolve('./build')
   },
   resolve: {
     modules: ['node_modules', 'src']
@@ -42,7 +42,15 @@ module.exports = {
       }
     ]
   },
-  plugins: [ styleExtractor ],
+  plugins: [
+    styleExtractor,
+    // webpack cross-env support
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      },
+    })
+  ],
   devServer: {
     contentBase: path.resolve(__dirname, '../public'),
     compress: true,
