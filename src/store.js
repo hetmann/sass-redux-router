@@ -1,8 +1,7 @@
-import Immutable from 'immutable';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
-import rootReducer from './reducers';
+import Immutable from 'immutable';
 
 const loggerMiddleware = createLogger({
   stateTransformer: (state) => {
@@ -20,9 +19,19 @@ const loggerMiddleware = createLogger({
   }
 });
 
+let middlewares = [thunkMiddleware];
+
+// sass-redux-router/src/store.js
+// 25:5  error  'process' is not defined  no-undef
+if (process.env.NODE_ENV === 'development') {
+  middlewares = [...middlewares, loggerMiddleware];
+}
+
+import rootReducer from './reducers';
+
 const store = (moduleReducers) => createStore(
   rootReducer(moduleReducers),
-  applyMiddleware(thunkMiddleware, loggerMiddleware)
+  applyMiddleware(...middlewares)
 );
 
 export default store;
