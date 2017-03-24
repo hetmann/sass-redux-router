@@ -1,6 +1,6 @@
 const ExtractTestPlugin = require('extract-text-webpack-plugin');
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
 
 const styleExtractor = new ExtractTestPlugin('style.css');
 
@@ -18,7 +18,8 @@ module.exports = {
     path: path.resolve('./build')
   },
   resolve: {
-    modules: ['node_modules', 'src']
+    extensions: ['.js', '.scss', '.less'],
+    modules: [path.join(__dirname), 'node_modules', '.', 'build', 'src']
   },
   resolveLoader: {
     moduleExtensions: ['-loader']
@@ -44,10 +45,10 @@ module.exports = {
   },
   plugins: [
     styleExtractor,
-    // webpack cross-env support
+    // webpack cross-env inject NODE_ENV support
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       },
     })
   ],
