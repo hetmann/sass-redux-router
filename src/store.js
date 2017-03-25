@@ -21,8 +21,6 @@ const loggerMiddleware = createLogger({
 
 let middlewares = [thunkMiddleware];
 
-// sass-redux-router/src/store.js
-// 25:5  error  'process' is not defined  no-undef
 if (process.env.NODE_ENV === 'development') {
   middlewares = [...middlewares, loggerMiddleware];
 }
